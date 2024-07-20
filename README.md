@@ -16,7 +16,7 @@ Table of Contents
 12. Abbreviations
 
 
-#Step 1: Preparing Fine-mapping Output
+__Step 1: Preparing Fine-mapping Output__
 
 Using the fine-mapping script, two fine-mapping datasets of IBD-associated risk loci in EUR individuals were integrated to create a uniform dataset of CI-SNPs.
 
