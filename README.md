@@ -16,7 +16,6 @@ Table of Contents
 
 
 Preparing Fine-mapping Output:
-
 Using the fine-mapping script, two fine-mapping datasets of IBD-associated risk loci in EUR individuals were integrated to create a uniform dataset of CI-SNPs.
 
 Finding SNPs that Impact Binding of TFs:
