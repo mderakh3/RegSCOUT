@@ -1,1 +1,1 @@
-# Immune Cell Subtypes Variants-to-Genes Mapping in Inflammatory Bowel Diseases
+# Immune Cell Subtypes Specific Variants-to-Genes Mapping
