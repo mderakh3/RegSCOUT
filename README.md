@@ -18,4 +18,10 @@ Initially, by using the eQTL_gene_linkage script in eQTL directory, the input fo
 Step 6: Adding ChromHMM Annotation Labels
 ChromHMM_annotation script uses cell subtype specific ChromHMM annotation files to assign the labels of histone marks to risk-mediating peaks. 
 
-Step 7: 
+Step 7: Integration of All Data
+Using the final_output script, the data of all variants, their corresponding transcriptions factors, risk-mediating peaks, and genes were integrated in a cell subtype specific manner. 
+
+Step 8: Prioritizing Maps
+The prioritizing_maps script prioritizes those variants-to-genes maps that have genes that showed up in two methods of gene linkage at least and it gets rid of other genes and those maps that do not pass this criteria. 
+
+Step 9: 
