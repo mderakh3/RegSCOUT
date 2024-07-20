@@ -15,11 +15,10 @@ Table of Contents
 12. Abbreviations
 
 
-Preparing Fine-mapping Output:
+Step 1: Preparing Fine-mapping Output.
 Using the fine-mapping script, two fine-mapping datasets of IBD-associated risk loci in EUR individuals were integrated to create a uniform dataset of CI-SNPs.
 
-Finding SNPs that Impact Binding of TFs:
-
+Step 2: Finding SNPs that Impact Binding of TFs
 Using the atSNP package and JASPAR2024, the EffectSNP script analyzes the impact of CI-SNPs on the binding affinities of human TFs and provides EffectSNP-TF pairs along with their log_lik_ratio.
 
 Step 3: Finding Effect-SNPs that Fall Within Peaks in snATAC-seq
