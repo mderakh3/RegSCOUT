@@ -1,18 +1,18 @@
 # Immune Cell Subtypes Specific Variants-to-Genes Mapping in IBD
 
 Table of Contents 
-Step 1: Preparing Fine-mapping Output
-Step 2: Finding SNPs that Impact Binding of TFs
-Step 3: Finding Effect-SNPs that Fall Within Peaks in snATAC-seq
-Step 4: Verifying the Physical Proximity of Co-accessible Pairs of Peaks
-Step 5: eQTL for Peak-overlapping SNPs
-Step 6: Adding ChromHMM Annotation Labels
-Step 7: Integration of All Data
-Step 8: Prioritizing Maps
-Step 9: Cell Subtype Specific Network Analysis
-Step 10: Pathway and Disease Enrichment Analysis Using EnrichR
-Step 11: Postprocessing
-Abbreviations
+- Step 1: Preparing Fine-mapping Output
+- Step 2: Finding SNPs that Impact Binding of TFs
+- Step 3: Finding Effect-SNPs that Fall Within Peaks in snATAC-seq
+- Step 4: Verifying the Physical Proximity of Co-accessible Pairs of Peaks
+- Step 5: eQTL for Peak-overlapping SNPs
+- Step 6: Adding ChromHMM Annotation Labels
+- Step 7: Integration of All Data
+- Step 8: Prioritizing Maps
+- Step 9: Cell Subtype Specific Network Analysis
+- Step 10: Pathway and Disease Enrichment Analysis Using EnrichR
+- Step 11: Postprocessing
+- Abbreviations
 
 
 Step 1: Preparing Fine-mapping Output
