@@ -74,7 +74,7 @@ The gene_set_enrichment script performs:
 __Step 11: Postprocessing__
 
 In the postprocessing directory:
-- part_1, part_2, and part_3 scripts generate tables and figures for the manuscript.
+- part_1, part_2, part_3, and loci_plot scripts generate tables and figures for the manuscript.
 
 
 __Abbreviations__
