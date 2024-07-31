@@ -562,6 +562,15 @@ prioritized_table <- prioritized_table %>% separate_rows(gene_score, sep = ", ")
 prioritized_table$gene_score <- gsub("\\(.*\\)", "", prioritized_table$gene_score)
 prioritized_table$gene_score <- gsub(" ", "", prioritized_table$gene_score)
 
+important_loci <- prioritized_table %>%
+  dplyr::select(locus, effect_snp, tf, rmp, rmp_hm_label,cell_type, gene_score) %>%
+  group_by(locus, effect_snp, tf, rmp, gene_score) %>%
+  distinct() %>%
+  summarise(count = n(), cell_type = paste(cell_type, collapse = ", ")) %>%
+  arrange(desc(count))
+
+write.table(important_loci, "important_loci.txt", sep = "\t", row.names = FALSE)
+
 prioritized_genes <- unique(prioritized_table$gene_score)
 
 library(devtools) # retrieving information from DisGenNet database
@@ -857,6 +866,16 @@ all_results <- lapply(names(cell_type_matrices), function(cell_type) {
 
 final_results <- bind_rows(all_results)
 
+final_results <- final_results %>%
+  group_by(Cell_Type) %>%
+  arrange(FDR) %>%
+  slice_head(n = 3)
+
+final_results %>%
+  group_by(Label) %>%
+  summarise(Count = n()) %>%
+  arrange(desc(Count))
+
 write.csv(final_results, "enrichment_hm_labels.csv", row.names = FALSE)
 
 library(qqman) # checking inflation in enrichment analysis
@@ -916,4 +935,91 @@ png(filename = "hm_heatmap.png", width = 3600, height = 3600, res = 300)
 draw(ht, annotation_legend_side = "right", heatmap_legend_side = "right")
 dev.off()
 
+# gene risk score distribution 
+scored_table <- read.table("scored_table.txt", header = TRUE, sep = "\t")
 
+cell_type_genes <- scored_table %>%
+  group_by(cell_type) %>%
+  summarise(Unique_Genes = n_distinct(gene[gene_ppa > 0.5])) %>%
+  arrange(desc(Unique_Genes))
+
+scored_table <- scored_table %>%
+  filter(gene_ppa > 0.5) %>%
+  dplyr::select(cell_type, gene, gene_ppa) %>%
+  distinct()
+
+scored_genes <- scored_table %>%
+  group_by(gene) %>%
+  summarise(Count = n()) %>%
+  arrange(desc(Count))
+
+scored_table <- scored_table %>%
+  left_join(scored_genes, by = "gene")
+
+write.table(scored_table, "scored_0.5_table.txt", sep = "\t", row.names = FALSE)
+
+# cell type risk score distribution
+scored_table <- read.table("scored_table.txt", header = TRUE, sep = "\t")
+
+cell_type_genes <- scored_table %>%
+  dplyr::select(cell_type, gene, gene_ppa) %>%
+  distinct()
+
+ggplot(cell_type_genes, aes(x = reorder(cell_type, gene_ppa, median), y = gene_ppa)) +
+  geom_boxplot(fill = "skyblue", color = "black", outlier.color = "red", outlier.shape = 16, outlier.size = 2) +
+  coord_flip() +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.y = element_text(size = 12, color = "black"),
+    axis.text.x = element_text(size = 12, color = "black"),
+    axis.title = element_text(size = 14, color = "black"),
+    plot.title = element_text(size = 16, hjust = 0.5),
+    panel.grid.major = element_line(size = 0.5, linetype = 'solid', colour = "gray"),
+    panel.grid.minor = element_line(size = 0.25, linetype = 'solid', colour = "lightgray")
+  ) +
+  labs(x = "Immune Cell Subtypes", y = "Gene PPA") +
+  ggtitle("Distribution of Gene PPA Scores by Cell Type")
+
+ggsave("cell_type_gene_ppa.png", width = 10, height = 6, dpi = 300)
+
+# gene prioritization score distribution 
+scored_table <- read.table("scored_table.txt", header = TRUE, sep = "\t")
+
+cell_type_genes <- scored_table %>%
+  dplyr::select(cell_type, gene, prioritization_score) %>%
+  filter(prioritization_score > 2) %>%
+  distinct()
+
+write.table(cell_type_genes, "scored_3_table.txt", sep = "\t", row.names = FALSE)
+
+cell_type_genes_combined <- cell_type_genes %>%
+  group_by(cell_type) %>%
+  summarise(Unique_Genes = paste(unique(gene), collapse = ", ")) %>%
+  arrange(desc(Unique_Genes))
+
+cell_type_genes <- scored_table %>%
+  dplyr::select(cell_type, gene, prioritization_score) %>%
+  filter(prioritization_score > 1) %>%
+  distinct()
+
+scored_genes <- cell_type_genes %>%
+  group_by(cell_type) %>%
+  summarise(Count = n()) %>%
+  arrange(desc(Count))
+
+ggplot(scored_genes, aes(x = reorder(cell_type, Count, median), y = Count)) +
+  geom_bar(stat = "identity", fill = "skyblue", color = "black") +
+  coord_flip() +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.y = element_text(size = 12, color = "black"),
+    axis.text.x = element_text(size = 12, color = "black"),
+    axis.title = element_text(size = 14, color = "black"),
+    plot.title = element_text(size = 16, hjust = 0.5),
+    panel.grid.major = element_line(size = 0.5, linetype = 'solid', colour = "gray"),
+    panel.grid.minor = element_line(size = 0.25, linetype = 'solid', colour = "lightgray")
+  ) +
+  labs(x = "Immune Cell Subtypes", y = "Number of Genes") +
+  ggtitle("Number of Genes with Prioritization Score > 1 by Cell Type")
+
+ggsave("cell_type_gene_prioritization_score.png", width = 10, height = 6, dpi = 300)

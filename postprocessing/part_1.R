@@ -297,22 +297,6 @@ ggplot(locus_count_long, aes(x = factor(locus), y = count, fill = SNP_type)) +
     plot.background = element_rect(fill = "white", color = "white")
   )
 
-# ggplot(locus_count_long, aes(x = locus, y = count, color = SNP_type, group = SNP_type)) +
-#   geom_line(size = 1) +
-#   geom_point(size = 2) +
-#   scale_color_manual(values = c("CI-SNPs" = "#00B050", "Effect-SNPs" = "red", "PO-SNPs" = "blue")) +
-#   labs(x = "Locus", y = "Number of SNPs", color = "SNP Type") +
-#   theme_minimal(base_size = 35) +
-#   theme(
-#     axis.text = element_text(size = 35, color = "black"), 
-#     axis.title = element_text(size = 30, color = "black"), 
-#     legend.text = element_text(size = 25, color = "black"), 
-#     legend.title = element_text(size = 25, color = "black"),
-#     legend.position = c(0.15, 0.9), # Position the legend inside the plot at the top left
-#     panel.background = element_rect(fill = "white", color = "white"), 
-#     plot.background = element_rect(fill = "white", color = "white")
-#   )
-
 ggsave("SNPs_per_locus.png", width = 45, height = 18)
 
 # PO-SNPs table 
@@ -323,4 +307,5 @@ risk_regions_ratio <- risk_regions_ratio %>%
   dplyr::select(SNP, region, cell) %>%
   distinct() 
 
-write.table(risk_regions_ratio, "pos_snps_tble.txt", sep = "\t", row.names = FALSE)
+write.table(risk_regions_ratio, "po_snps_tble.txt", sep = "\t", row.names = FALSE)
+
