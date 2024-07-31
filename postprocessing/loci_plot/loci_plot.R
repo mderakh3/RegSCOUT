@@ -74,7 +74,7 @@ for (i in 1:nrow(eff_snp)){
   full_table$CHR[full_table$effect_snp == snp] = chr
 }
 
-loc_id = 129
+loc_id = 154
 loc_table = full_table[full_table$locus == loc_id,]
 prio_loc_table = prio_table[prio_table$locus == loc_id,]
 locus_region = strsplit(loc_table$loci_region[1], '-')[[1]]
@@ -276,14 +276,14 @@ snp_tf_obj = CreateSeuratObject(counts = snp_tf_assay)
 snp_tf_plot <- PeakPlot(
   object = snp_obj,
   region = zoom_reg
-) + annotate("text", x=snp_x_pos_mod, y=snp_y_pos, label= snp_tf_frame$TF_name, size = 2)+
+) + annotate("text", x=snp_x_pos_mod, y=snp_y_pos, label= snp_tf_frame$TF_name, size = 4)+
   ylim(c(-1,1))
 
 snp_tf_plot$labels$y = "Affected TFs"
 print(snp_tf_plot)
 
 cov_plot = CombineTracks(plotlist = list(snp_tf_plot, snp_name_plot, peak_plot_zoom),
-                         heights = c(2,2,4), width = c(10,10,10))
+                         heights = c(2,2,4), width = c(4,4,10))
 cov_plot
 
 reg = main_reg
@@ -416,7 +416,7 @@ new_annotation$tx_id = tx_id_list
 # make annotation frame object, can either use annotation from pbmc or the gencode you read in
 annotation_frame = new_annotation
 
-#To make annotation_frame_all protein coding specific
+# To make annotation_frame_all protein coding specific
 procode_index_2 = annotation_frame$gene_biotype == "protein_coding"
 annotation_frame = annotation_frame[procode_index_2]
 
