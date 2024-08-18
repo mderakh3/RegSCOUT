@@ -12,8 +12,9 @@ __Table of Contents__
 8. Prioritizing Maps
 9. Cell Subtype Specific Network Analysis
 10. Pathway and Disease Enrichment Analysis Using EnrichR
-11. Postprocessing
-12. Abbreviations
+11. scRNA Suqeucing Analsysi Using scIBD
+12. Postprocessing
+13. Abbreviations
 
 
 __Step 1: Preparing Fine-mapping Output__
@@ -70,11 +71,14 @@ The gene_set_enrichment script performs:
 - Pathway analysis using MSigDB.
 - Disease analysis using DisGeNet.
 
+__Step 11: scRNA-seq Analysis Using scIBD__
 
-__Step 11: Postprocessing__
+The inspect_seurat script inspects the structure of the Seurat object using the inspection_job on computeCanada. The filter_seurat script subsets the Seurat object to only contain PBMC samples using teh filteration_job on computeCanada. Then, the scIBD scripts analyze the expression profiles of genes in UC, CD and healthy. 
+
+__Step 12: Postprocessing__
 
 In the postprocessing directory:
-- part_1, part_2, part_3, and loci_plot scripts generate tables and figures for the manuscript.
+- part_1, part_2, part_3, part_4, and loci_plot scripts generate tables and figures for the manuscript.
 
 
 __Abbreviations__
